@@ -30,10 +30,21 @@ app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send("Home");
+    res.send(localDb.users);
 })
 app.post('/register', (req, res) => {
-    res.json("You have register a new user: ");
+    const { firstName, lastName, email, password, partyAff } = req.body
+    localDb.users.push({
+            id: '212',
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+            partyAff: partyAff,
+            joined: new Date()
+
+    })
+    res.json(localDb.users[localDb.users.length - 1]);
 })
 app.post('/signin', (req, res) => {
     if (req.body.email === localDb.users[0].email && 
